@@ -1,22 +1,22 @@
 //! Normalize a CSS z-index to an f32 floating-point number between 0.0 and 1.0.
 //!
-//! [Try it in the Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=c54fbc202ddab7986497fb208d68e4ff)
+//! [Try it in the Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=53960a8bf2314565fd0f8507b833fe71)
+
+#![no_std]
 
 const MAX_CSS_Z: i64 = 2_147_483_647;
-const DIV: i64 = 499;
+const DIV: i64 = 499; // a divisor that is an arbitrary prime number
 const EPS: f32 = f32::EPSILON;
-const MAX: f32 = 1.0261047;
+// This number looks arbitray, but it's actually the return value of
+// `normalize(MAX_CSS_Z)` before dividing by `NORMALIZATION_FACTOR`.
+const NORMALIZATION_FACTOR: f32 = 1.0261047;
 
 pub fn normalize(z: i32) -> f32 {
     let z = z as i64 + MAX_CSS_Z;
-
     let quo = (z / DIV) as f32;
     let rem = (z % DIV) as f32;
 
-    let e1 = EPS * quo;
-    let e2 = EPS * rem;
-
-    (e1 + e2) / MAX
+    (EPS * quo + EPS * rem) / NORMALIZATION_FACTOR
 }
 
 #[cfg(test)]
