@@ -1,8 +1,12 @@
 # Normalization of a CSS z-index value to a 32-bit floating-point number
 
+[![crate](https://img.shields.io/crates/v/normalize-css-z.svg)](https://crates.io/crates/normalize-css-z)
+[![documentation](https://docs.rs/normalize-css-z/badge.svg)](https://docs.rs/normalize-css-z)
+[![build status](https://github.com/sjinno/normalize-css-z/actions/workflows/rust.yml/badge.svg)](https://github.com/sjinno/normalize-css-z/actions)
+
 ## Origin
 
-I struggled to map CSS z-index values to 32-bit floating-point numbers between 0.0 and 1.0 because dividing a large number by another large number, such as 2_147_483_646.0 / 2_147_483_647.0, does not yield precise results.
+I struggled to map CSS z-index values to 32-bit floating-point numbers between 0.0 and 1.0 because dividing a large number by another large number, such as `2_147_483_646.0 / 2_147_483_647.0`, does not yield precise results.
 
 To illustrate the issue, here are some examples (see [playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=d46e7034b55a1fd0362d1ef3f000304a)):
 
@@ -27,7 +31,13 @@ Additionally, I haven't done any parameter tuning yet, so there could very well 
 
 ## Usage
 
-`cargo add normalize-css-z` or simply add this to your `Cargo.toml`:
+Run the following Cargo command in your project directory:
+
+```zsh
+cargo add normalize-css-z
+```
+
+Or add the following line to your Cargo.toml:
 
 ```toml
 [dependencies]
