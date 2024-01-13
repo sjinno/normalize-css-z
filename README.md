@@ -1,4 +1,4 @@
-# Normalize a CSS z-index value to a 32-bit floating-point number
+# Normalization of a CSS z-index value to a 32-bit floating-point number
 
 ## Origin
 
@@ -24,3 +24,21 @@ I spent some time experimenting to figure out a reasonable approach to this chal
 It's important to note that this approach is quite basic and does not guarantee 100% precision. In other words, further stress testing is necessary to ensure the reliability of this implementation.
 
 Additionally, I haven't done any parameter tuning yet, so there could very well be a more efficient method to achieve this that I haven’t discovered.
+
+## Usage
+
+`cargo add normalize-css-z` or simply add this to your `Cargo.toml`:
+
+```toml
+[dependencies]
+normalize-css-z = "0.1"
+```
+
+## License
+
+Licensed under either of
+
+- [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+- [MIT license](http://opensource.org/licenses/MIT)
+
+at your option.
