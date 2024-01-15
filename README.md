@@ -41,7 +41,7 @@ Or add the following line to your Cargo.toml:
 
 ```toml
 [dependencies]
-normalize-css-z = "0.1"
+normalize-css-z = "0.2"
 ```
 
 ## License
