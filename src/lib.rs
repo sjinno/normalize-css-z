@@ -18,17 +18,20 @@
 //! Later, I aim to expand this to allow for customizable ranges, but for now, this should be adequate.
 
 const MAX_CSS_Z: i32 = 2147483647;
-const MANTISSA: i32 = 8388608;
-const MANTISSA2: i32 = 8388608 * 2;
 
 const EXP: i32 = 7;
+const X: i32 = (EXP + 1) / 4;
+
 const EXP_OFFSET1: i32 = 0;
-const EXP_OFFSET2: i32 = (EXP + 1) / 4;
+const EXP_OFFSET2: i32 = X;
 const EXP_OFFSET3: i32 = EXP_OFFSET2 * 3;
 
-const RANGE_1: (i32, i32) = (MAX_CSS_Z - MANTISSA2 + 1, MAX_CSS_Z);
-const RANGE_2: (i32, i32) = (-MANTISSA2, MANTISSA2 - 1);
-const RANGE_3: (i32, i32) = (-MAX_CSS_Z, -MAX_CSS_Z + MANTISSA2);
+const MANTISSA: i32 = 8388608;
+const MANTISSA_X: i32 = 8388608 * X;
+
+const RANGE_1: (i32, i32) = (MAX_CSS_Z - MANTISSA_X + 1, MAX_CSS_Z);
+const RANGE_2: (i32, i32) = (-MANTISSA_X, MANTISSA_X - 1);
+const RANGE_3: (i32, i32) = (-MAX_CSS_Z, -MAX_CSS_Z + MANTISSA_X);
 
 pub fn normalize(z: i32) -> f32 {
     if z == MAX_CSS_Z {
@@ -58,13 +61,9 @@ fn normalize_helper(z_: i32, upper_bound: i32, exp_offset: i32) -> f32 {
     let quo = z / MANTISSA;
     let rem = z % MANTISSA;
     let normal = 2f32.powi(-quo - exp_offset);
-    get_nth_subnormal(rem as u32, normal)
-}
 
-// Generates the `n`th subnormal number for the given `normal`.
-pub fn get_nth_subnormal(n: u32, normal: f32) -> f32 {
-    let bits = normal.to_bits();
-    f32::from_bits(bits - n)
+    // Returns the `n`th subnormal number for the given `normal`.
+    f32::from_bits(normal.to_bits() - rem as u32)
 }
 
 #[cfg(test)]

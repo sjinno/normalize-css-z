@@ -1,5 +1,3 @@
-use normalize_css_z::*;
-
 fn main() {
     let mantissa = 8388608;
     let mut count = 0;
@@ -18,4 +16,10 @@ fn main() {
     }
 
     println!("{count}");
+}
+
+// Generates the `n`th subnormal number for the given `normal`.
+fn get_nth_subnormal(n: u32, normal: f32) -> f32 {
+    let bits = normal.to_bits();
+    f32::from_bits(bits - n)
 }
