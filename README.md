@@ -44,6 +44,12 @@ Or add the following line to your Cargo.toml:
 normalize-css-z = "0.2"
 ```
 
+## Supported ranges of z-indexes
+
+| upper                    | middle                | lower                      |
+| ------------------------ | --------------------- | -------------------------- |
+| [2130706432, 2147483647] | [-16777216, 16777215] | [-2147483647, -2130706431] |
+
 ## License
 
 Licensed under either of
