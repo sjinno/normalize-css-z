@@ -41,7 +41,7 @@ Or add the following line to your Cargo.toml:
 
 ```toml
 [dependencies]
-normalize-css-z = "0.3"
+normalize-css-z = "0.4"
 ```
 
 ## Supported ranges of z-indexes
