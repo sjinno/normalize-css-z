@@ -10,9 +10,9 @@
 //! ## Supported ranges of z-indexes
 //!
 //! ```markdown
-//! | upper                    | middle                  | lower                      |
-//! | ------------------------ | ----------------------- | -------------------------- |
-//! | [2130706432, 2147483647] | [-16777216, 16777216-1] | [-2147483647, -2130706431] |
+//! | upper                     | middle                 | lower                       |
+//! | ------------------------- | ---------------------- | --------------------------- |
+//! | `2130706432..=2147483647` | `-16777215..=16777216` | `-2147483647..=-2130706431` |
 //! ```
 //!
 //! Later, I aim to expand this to allow for customizable ranges, but for now, this should be adequate.
@@ -32,8 +32,8 @@ const MANTISSA_X: i32 = 8388608 * X;
 const RANGE_UPPER_1: i32 = MAX_CSS_Z;
 const RANGE_LOWER_1: i32 = MAX_CSS_Z - MANTISSA_X + 1;
 
-const RANGE_UPPER_2: i32 = MANTISSA_X - 1;
-const RANGE_LOWER_2: i32 = -MANTISSA_X;
+const RANGE_UPPER_2: i32 = MANTISSA_X;
+const RANGE_LOWER_2: i32 = -MANTISSA_X + 1;
 
 const RANGE_UPPER_3: i32 = -MAX_CSS_Z + MANTISSA_X;
 const RANGE_LOWER_3: i32 = -MAX_CSS_Z;
@@ -178,18 +178,18 @@ mod tests {
         let mut prev = -f32::MIN_POSITIVE;
         let curr = normalize(RANGE_UPPER_3);
         assert!(curr > prev, "{}: {} > {}", RANGE_UPPER_3, curr, prev);
-        eprintln!("(L2): {curr} : {}", RANGE_UPPER_3);
+        eprintln!("(LU): {curr} : {}", RANGE_UPPER_3);
         prev = curr;
         let curr = normalize(RANGE_LOWER_2);
         assert!(curr > prev, "{}: {} > {}", RANGE_LOWER_2, curr, prev);
-        eprintln!("(M1): {curr} : {}", RANGE_LOWER_2);
+        eprintln!("(ML): {curr} : {}", RANGE_LOWER_2);
         prev = curr;
         let curr = normalize(RANGE_UPPER_2);
         assert!(curr > prev, "{}: {} > {}", RANGE_UPPER_2, curr, prev);
-        eprintln!("(M2): {curr} : {}", RANGE_UPPER_2);
+        eprintln!("(MU): {curr} : {}", RANGE_UPPER_2);
         prev = curr;
         let curr = normalize(RANGE_LOWER_1);
         assert!(curr > prev, "{}: {} > {}", RANGE_LOWER_1, curr, prev);
-        eprintln!("(U1): {curr} : {}", RANGE_LOWER_1);
+        eprintln!("(UL): {curr} : {}", RANGE_LOWER_1);
     }
 }
