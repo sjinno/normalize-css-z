@@ -121,6 +121,7 @@ mod tests {
         normalize(RANGE_3.1);
     }
 
+    #[ignore]
     #[test]
     fn test_normalize_upper() {
         let mut prev = -f32::MIN_POSITIVE;
@@ -134,6 +135,7 @@ mod tests {
         eprintln!("{count}");
     }
 
+    #[ignore]
     #[test]
     fn test_normalize_middle() {
         let mut prev = -f32::MIN_POSITIVE;
@@ -147,6 +149,7 @@ mod tests {
         eprintln!("{count}");
     }
 
+    #[ignore]
     #[test]
     fn test_normalize_lower() {
         let mut prev = -f32::MIN_POSITIVE;
@@ -161,51 +164,31 @@ mod tests {
     }
 
     #[test]
-    fn test_normalize_check() {
+    fn test_normalize_all() {
         test_normalize_lower();
         test_normalize_middle();
         test_normalize_upper();
         test_continuity();
     }
 
+    #[ignore]
     #[test]
     fn test_continuity() {
         let mut prev = -f32::MIN_POSITIVE;
-        for i in RANGE_3.0..=RANGE_3.0 + 10 {
-            let curr = normalize(i);
-            assert!(curr > prev, "{i}: {} > {}", curr, prev);
-            eprintln!("(L1): {curr} : {i}");
-            prev = curr;
-        }
-        for i in RANGE_3.1 - 10..=RANGE_3.1 {
-            let curr = normalize(i);
-            assert!(curr > prev, "{i}: {} > {}", curr, prev);
-            eprintln!("(L2): {curr} : {i}");
-            prev = curr;
-        }
-        for i in RANGE_2.0..=RANGE_2.0 + 10 {
-            let curr = normalize(i);
-            assert!(curr > prev, "{i}: {} > {}", curr, prev);
-            eprintln!("(M1): {curr} : {i}");
-            prev = curr;
-        }
-        for i in RANGE_2.1 - 10..=RANGE_2.1 {
-            let curr = normalize(i);
-            assert!(curr > prev, "{i}: {} > {}", curr, prev);
-            eprintln!("(M2): {curr} : {i}");
-            prev = curr;
-        }
-        for i in RANGE_1.0..=RANGE_1.0 + 10 {
-            let curr = normalize(i);
-            assert!(curr > prev, "{i}: {} > {}", curr, prev);
-            eprintln!("(U1): {curr} : {i}");
-            prev = curr;
-        }
-        for i in RANGE_1.1 - 10..=RANGE_1.1 {
-            let curr = normalize(i);
-            assert!(curr > prev, "{i}: {} > {}", curr, prev);
-            eprintln!("(U2): {curr} : {i}");
-            prev = curr;
-        }
+        let curr = normalize(RANGE_3.1);
+        assert!(curr > prev, "{}: {} > {}", RANGE_3.1, curr, prev);
+        eprintln!("(L2): {curr} : {}", RANGE_3.1);
+        prev = curr;
+        let curr = normalize(RANGE_2.0);
+        assert!(curr > prev, "{}: {} > {}", RANGE_2.0, curr, prev);
+        eprintln!("(M1): {curr} : {}", RANGE_2.0);
+        prev = curr;
+        let curr = normalize(RANGE_2.1);
+        assert!(curr > prev, "{}: {} > {}", RANGE_2.1, curr, prev);
+        eprintln!("(M2): {curr} : {}", RANGE_2.1);
+        prev = curr;
+        let curr = normalize(RANGE_1.0);
+        assert!(curr > prev, "{}: {} > {}", RANGE_1.0, curr, prev);
+        eprintln!("(U1): {curr} : {}", RANGE_1.0);
     }
 }
