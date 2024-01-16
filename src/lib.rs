@@ -33,6 +33,16 @@ const RANGE_MIDDLE_L: i32 = -MANTISSA / 2 + 1;
 const RANGE_LOWER_U: i32 = -MAX_CSS_Z + MANTISSA;
 const RANGE_LOWER_L: i32 = -MAX_CSS_Z;
 
+/// Normalizes a CSS z-index to an f32 floating-point number between 0.0 and 1.0.
+///
+/// ```
+/// # use normalize_css_z::normalize;
+/// # fn main() {
+/// let z_ = 2_147_483_647;
+/// let z = normalize(z_);
+/// assert_eq!(z, 1.0);
+/// # }
+/// ```
 pub fn normalize(z: i32) -> f32 {
     assert!(
         (z >= RANGE_UPPER_L)

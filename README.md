@@ -4,6 +4,10 @@
 [![documentation](https://docs.rs/normalize-css-z/badge.svg)](https://docs.rs/normalize-css-z)
 [![build status](https://github.com/sjinno/normalize-css-z/actions/workflows/rust.yml/badge.svg)](https://github.com/sjinno/normalize-css-z/actions)
 
+## Note
+
+This project is a work in progress, so please watch for a new release and ensure to use the latest version.
+
 ## Origin
 
 I struggled to map CSS z-index values to 32-bit floating-point numbers between 0.0 and 1.0 because dividing a large number by another large number, such as `2_147_483_646.0 / 2_147_483_647.0`, does not yield precise results.
@@ -25,10 +29,6 @@ To illustrate the issue, here are some examples (see [playground](https://play.r
 
 I spent some time experimenting to figure out a reasonable approach to this challenge, and I may have finally found a way to manage the headache of mapping CSS z-index values.
 
-It's important to note that this approach is quite basic and does not guarantee 100% precision. In other words, further stress testing is necessary to ensure the reliability of this implementation.
-
-Additionally, I haven't done any parameter tuning yet, so there could very well be a more efficient method to achieve this that I haven’t discovered.
-
 ## Usage
 
 Run the following Cargo command in your project directory:
@@ -44,11 +44,27 @@ Or add the following line to your Cargo.toml:
 normalize-css-z = "0.4"
 ```
 
+And in your rust file:
+
+```rs
+// main.rs
+
+fn main() {
+    let z_ = 2_147_483_647;
+    let z = normalize_css_z::normalize(z_);
+    assert_eq!(z, 1.0);
+}
+```
+
 ## Supported ranges of z-indexes
 
 | lower                             | middle                   | upper                           |
 | --------------------------------- | ------------------------ | ------------------------------- |
 | `-2_147_483_647..=-2_139_095_039` | `-4_194_303..=4_194_304` | `2_139_095_040..=2_147_483_647` |
+
+### Total number of supported z-indexes (as of 1/16/2024)
+
+8,388,608 \* 3 + 1 = 25,165,825
 
 ## License
 
