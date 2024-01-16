@@ -46,8 +46,8 @@ const RANGE_LOWER_L: i32 = -MAX_CSS_Z;
 pub fn normalize(z: i32) -> f32 {
     assert!(
         (z >= RANGE_UPPER_L)
-            || (RANGE_MIDDLE_L <= z && z <= RANGE_MIDDLE_U)
-            || (RANGE_LOWER_L <= z && z <= RANGE_LOWER_U),
+            || (RANGE_MIDDLE_L..=RANGE_MIDDLE_U).contains(&z)
+            || (RANGE_LOWER_L..=RANGE_LOWER_U).contains(&z),
         "Unsupported z-index value: {}",
         z
     );
