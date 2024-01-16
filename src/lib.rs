@@ -17,8 +17,8 @@
 //!
 //! Later, I aim to expand this to allow for customizable ranges, but for now, this should be adequate.
 
-const MAX_CSS_Z: i32 = 2147483647;
-const MANTISSA: i32 = 8388608;
+const MAX_CSS_Z: i32 = 2_147_483_647;
+const MANTISSA: i32 = 8_388_608;
 
 const EXP_OFFSET1: i32 = 0;
 const EXP_OFFSET2: i32 = 1;
@@ -45,7 +45,7 @@ const RANGE_LOWER_L: i32 = -MAX_CSS_Z;
 /// ```
 pub fn normalize(z: i32) -> f32 {
     assert!(
-        (z >= RANGE_UPPER_L)
+        z >= RANGE_UPPER_L
             || (RANGE_MIDDLE_L..=RANGE_MIDDLE_U).contains(&z)
             || (RANGE_LOWER_L..=RANGE_LOWER_U).contains(&z),
         "Unsupported z-index value: {}",
@@ -130,7 +130,7 @@ mod tests {
     #[ignore]
     #[test]
     fn test_normalize_upper() {
-        let mut prev = -f32::MIN_POSITIVE;
+        let mut prev = -1.0;
         let mut count = 0;
         for i in RANGE_UPPER_L..=RANGE_UPPER_U {
             count += 1;
@@ -144,7 +144,7 @@ mod tests {
     #[ignore]
     #[test]
     fn test_normalize_middle() {
-        let mut prev = -f32::MIN_POSITIVE;
+        let mut prev = -1.0;
         let mut count = 0;
         for i in RANGE_MIDDLE_L..=RANGE_MIDDLE_U {
             count += 1;
@@ -158,7 +158,7 @@ mod tests {
     #[ignore]
     #[test]
     fn test_normalize_lower() {
-        let mut prev = -f32::MIN_POSITIVE;
+        let mut prev = -1.0;
         let mut count = 0;
         for i in RANGE_LOWER_L..=RANGE_LOWER_U {
             count += 1;
@@ -172,7 +172,7 @@ mod tests {
     #[ignore]
     #[test]
     fn test_continuity() {
-        let mut prev = -f32::MIN_POSITIVE;
+        let mut prev = -1.0;
         let curr = normalize(RANGE_LOWER_U);
         assert!(curr > prev, "{}: {} > {}", RANGE_LOWER_U, curr, prev);
         eprintln!("(LU): {curr} : {}", RANGE_LOWER_U);
