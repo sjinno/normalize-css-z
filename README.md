@@ -44,7 +44,7 @@ Or add the following line to your Cargo.toml:
 normalize-css-z = "0.4"
 ```
 
-And in your rust file:
+And in your Rust file:
 
 ```rs
 // main.rs
