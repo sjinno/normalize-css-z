@@ -52,7 +52,7 @@ And in your Rust file:
 fn main() {
     let z_ = 2_147_483_647;
     let z = normalize_css_z::normalize(z_);
-    assert_eq!(z, 1.0);
+    assert_eq!(z, Some(1.0));
 }
 ```
 
