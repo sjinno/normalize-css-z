@@ -2,7 +2,7 @@
 
 [![crate](https://img.shields.io/crates/v/normalize-css-z.svg)](https://crates.io/crates/normalize-css-z)
 [![documentation](https://docs.rs/normalize-css-z/badge.svg)](https://docs.rs/normalize-css-z)
-[![build status](https://github.com/sjinno/normalize-css-z/actions/workflows/rust.yml/badge.svg)](https://github.com/sjinno/normalize-css-z/actions)
+[![build status](https://github.com/sjinno/normalize-css-z/actions/workflows/ci.yml/badge.svg)](https://github.com/sjinno/normalize-css-z/actions)
 
 ## Note
 
