@@ -69,10 +69,6 @@ fn main() {
 
 8,388,608 \* 3 + 1 = 25,165,825
 
-## MSRV
-
-1.35.0
-
 ## License
 
 Licensed under either of
