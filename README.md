@@ -41,18 +41,21 @@ Or add the following line to your Cargo.toml:
 
 ```toml
 [dependencies]
-normalize-css-z = "0.4"
+normalize-css-z = "0.5"
 ```
 
 And in your Rust file:
 
 ```rs
-// main.rs
+use normalize_css_z::normalize;
 
 fn main() {
     let z_ = 2_147_483_647;
-    let z = normalize_css_z::normalize(z_);
-    assert_eq!(z, Some(1.0));
+    if let Some(z) = normalize(z_) {
+        // Do something with `z`.
+    } else {
+        // Handle unsupported z-index.
+    }
 }
 ```
 
