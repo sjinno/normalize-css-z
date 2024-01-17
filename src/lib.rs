@@ -1,18 +1,30 @@
-//! Normalize a CSS z-index to an f32 floating-point number between 0.0 and 1.0. (not quite...)
+//! Normalize a CSS z-index to an f32 floating-point number between `0.0` and `1.0`. (not exactly...)
 //!
 //! Theoretically, this is not entirely feasible because we can generate only
 //! `2^23 (subnormal) * 127 (normal) = 1,065,353,216` distinct floating-point numbers in this range.
 //!
 //! And, the best part is that we only get a handful of precise numbers. Specifically, this crate
-//! can generate `25,165,825` unique floating-point numbers between 0.0 and 1.0, which should be more
+//! can generate `25,165,825` unique floating-point numbers between `0.0` and `1.0`, which should be more
 //! than sufficient for most use cases (hopefully).
 //!
 //! ## Supported ranges of z-indexes
 //!
-//! ```markdown
-//! | lower                             | middle                   | upper                           |
+//! | LOWER                             | MIDDLE                   | UPPER                           |
 //! | --------------------------------- | ------------------------ | ------------------------------- |
 //! | `-2_147_483_647..=-2_139_095_039` | `-4_194_303..=4_194_304` | `2_139_095_040..=2_147_483_647` |
+//!
+//! # Example
+//!
+//! ```
+//! # use normalize_css_z::normalize;
+//! # fn main() {
+//! let z_ = 2_147_483_647;
+//! if let Some(z) = normalize(z_) {
+//!     // Do something with `z`.
+//! } else {
+//!     // Handle unsupported z-index.
+//! }
+//! # }
 //! ```
 //!
 //! Later, I aim to expand this to allow for customizable ranges, but for now, this should be adequate.
