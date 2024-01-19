@@ -29,9 +29,9 @@
 //!
 //! Later, I aim to expand this to allow for customizable ranges, but for now, this should be adequate.
 
-// #[cfg(feature = "custom")]
+#[cfg(feature = "custom")]
 pub mod normalizer;
-// #[cfg(feature = "custom")]
+#[cfg(feature = "custom")]
 pub mod ranges;
 
 pub const MAX_CSS_Z: i32 = 2_147_483_647;
