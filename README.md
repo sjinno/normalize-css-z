@@ -59,7 +59,7 @@ fn main() {
 }
 ```
 
-### Custom lower, middle, and upper ranges are now available under the 'custom' feature flag as of version 0.6
+## Custom lower, middle, and upper ranges are now available under the 'custom' feature flag as of version 0.6
 
 **NOTE:** This version has not been thoroughly tested yet.
 
@@ -73,7 +73,10 @@ normalize-css-z = { version = "0.6", features = ["custom"] }
 And in your Rust file:
 
 ```rs
-use normalize_css_z::normalize;
+use normalize_css_z::{
+    normalizer::Normalizer,
+    ranges::{range, RangesBuilder},
+};
 
 fn main() {
     let builder = RangesBuilder::default()
@@ -82,7 +85,7 @@ fn main() {
         .with_upper(range(201, 300));
     let normalizer = Normalizer::new(builder.build());
 
-    if let Some(z) = normalizer.calc(z_) {
+    if let Some(z) = normalizer.calc(0) {
         // Do something with `z`.
     } else {
         // Handle unsupported z-index.
