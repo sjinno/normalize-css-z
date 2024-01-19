@@ -59,6 +59,37 @@ fn main() {
 }
 ```
 
+### Custom lower, middle, and upper ranges are now available under the 'custom' feature flag as of version 0.6
+
+**NOTE:** This version has not been thoroughly tested yet.
+
+To use, add the following line to your Cargo.toml:
+
+```toml
+[dependencies]
+normalize-css-z = { version = "0.6", features = ["custom"] }
+```
+
+And in your Rust file:
+
+```rs
+use normalize_css_z::normalize;
+
+fn main() {
+    let builder = RangesBuilder::default()
+        .with_lower(range(0, 100))
+        .with_middle(range(101, 200))
+        .with_upper(range(201, 300));
+    let normalizer = Normalizer::new(builder.build());
+
+    if let Some(z) = normalizer.calc(z_) {
+        // Do something with `z`.
+    } else {
+        // Handle unsupported z-index.
+    }
+}
+```
+
 ## Supported ranges of z-indexes
 
 | LOWER                             | MIDDLE                   | UPPER                           |
