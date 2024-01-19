@@ -41,7 +41,7 @@ Or add the following line to your Cargo.toml:
 
 ```toml
 [dependencies]
-normalize-css-z = "0.6"
+normalize-css-z = "0.7"
 ```
 
 And in your Rust file:
@@ -67,7 +67,7 @@ To use, add the following line to your Cargo.toml:
 
 ```toml
 [dependencies]
-normalize-css-z = { version = "0.6", features = ["custom"] }
+normalize-css-z = { version = "0.7", features = ["custom"] }
 ```
 
 And in your Rust file:
