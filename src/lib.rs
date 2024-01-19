@@ -7,7 +7,7 @@
 //! can generate `25,165,825` unique floating-point numbers between `0.0` and `1.0`, which should be more
 //! than sufficient for most use cases (hopefully).
 //!
-//! ## Supported ranges of z-indexes
+//! ## Supported ranges of z-indexes (default)
 //!
 //! | LOWER                             | MIDDLE                   | UPPER                           |
 //! | --------------------------------- | ------------------------ | ------------------------------- |
@@ -29,23 +29,26 @@
 //!
 //! Later, I aim to expand this to allow for customizable ranges, but for now, this should be adequate.
 
-const MAX_CSS_Z: i32 = 2_147_483_647;
-const MANTISSA: i32 = 8_388_608;
+// #[cfg(feature = "custom")]
+pub mod normalizer;
+// #[cfg(feature = "custom")]
+pub mod ranges;
 
-const EXP_OFFSET1: i32 = 0;
-const EXP_OFFSET2: i32 = 1;
-const EXP_OFFSET3: i32 = 2;
+pub const MAX_CSS_Z: i32 = 2_147_483_647;
+pub const MANTISSA: i32 = 8_388_608;
 
-const RANGE_UPPER_U: i32 = MAX_CSS_Z;
-const RANGE_UPPER_L: i32 = MAX_CSS_Z - MANTISSA + 1;
+pub const RANGE_UPPER_U: i32 = MAX_CSS_Z;
+pub const RANGE_UPPER_L: i32 = MAX_CSS_Z - MANTISSA + 1;
 
-const RANGE_MIDDLE_U: i32 = MANTISSA / 2;
-const RANGE_MIDDLE_L: i32 = -MANTISSA / 2 + 1;
+pub const RANGE_MIDDLE_U: i32 = MANTISSA / 2;
+pub const RANGE_MIDDLE_L: i32 = -MANTISSA / 2 + 1;
 
-const RANGE_LOWER_U: i32 = -MAX_CSS_Z + MANTISSA;
-const RANGE_LOWER_L: i32 = -MAX_CSS_Z;
+pub const RANGE_LOWER_U: i32 = -MAX_CSS_Z + MANTISSA;
+pub const RANGE_LOWER_L: i32 = -MAX_CSS_Z;
 
 /// Normalizes a CSS z-index to an f32 floating-point number between 0.0 and 1.0.
+///
+/// This is the most hassle-free way to use this crate if you don't need to customize the ranges.
 ///
 /// ```
 /// # use normalize_css_z::normalize;
@@ -56,24 +59,24 @@ const RANGE_LOWER_L: i32 = -MAX_CSS_Z;
 /// # }
 /// ```
 pub fn normalize(z: i32) -> Option<f32> {
+    fn helper(z_: i32, upper_bound: i32, exp_offset: i32) -> Option<f32> {
+        let z = upper_bound - z_;
+        let quo = z / MANTISSA;
+        let rem = z % MANTISSA;
+        let normal = 2f32.powi(-quo - exp_offset);
+
+        // Returns the `n`th subnormal number for the given `normal`.
+        Some(f32::from_bits(normal.to_bits() - rem as u32))
+    }
+
     match z {
-        RANGE_UPPER_U => Some(1.0),
         RANGE_LOWER_L => Some(0.0),
-        RANGE_UPPER_L..=RANGE_UPPER_U => normalize_helper(z, RANGE_UPPER_U, EXP_OFFSET1),
-        RANGE_MIDDLE_L..=RANGE_MIDDLE_U => normalize_helper(z, RANGE_MIDDLE_U, EXP_OFFSET2),
-        RANGE_LOWER_L..=RANGE_LOWER_U => normalize_helper(z, RANGE_LOWER_U, EXP_OFFSET3),
+        RANGE_UPPER_U => Some(1.0),
+        RANGE_LOWER_L..=RANGE_LOWER_U => helper(z, RANGE_LOWER_U, 2),
+        RANGE_MIDDLE_L..=RANGE_MIDDLE_U => helper(z, RANGE_MIDDLE_U, 1),
+        RANGE_UPPER_L..=RANGE_UPPER_U => helper(z, RANGE_UPPER_U, 0),
         _ => None,
     }
-}
-
-fn normalize_helper(z_: i32, upper_bound: i32, exp_offset: i32) -> Option<f32> {
-    let z = upper_bound - z_;
-    let quo = z / MANTISSA;
-    let rem = z % MANTISSA;
-    let normal = 2f32.powi(-quo - exp_offset);
-
-    // Returns the `n`th subnormal number for the given `normal`.
-    Some(f32::from_bits(normal.to_bits() - rem as u32))
 }
 
 #[cfg(test)]
