@@ -1,15 +1,15 @@
 #[cfg(feature = "custom")]
 use normalize_css_z::normalizer::Normalizer;
 #[cfg(feature = "custom")]
-use normalize_css_z::ranges::{range, RangesBuilder};
+use normalize_css_z::ranges::RangesBuilder;
 
 fn main() {
     #[cfg(feature = "custom")]
     {
         let builder = RangesBuilder::new()
-            .with_lower(range(0, 100))
-            .with_middle(range(100, 200))
-            .with_upper(range(200, 300));
+            .with_lower(0..=100)
+            .with_middle(100..=200)
+            .with_upper(200..=300);
         let normalizer = Normalizer::new(builder.build());
 
         let smallest = normalizer.calc(0);

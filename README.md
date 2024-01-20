@@ -75,14 +75,14 @@ And in your Rust file:
 ```rs
 use normalize_css_z::{
     normalizer::Normalizer,
-    ranges::{range, RangesBuilder},
+    ranges::RangesBuilder,
 };
 
 fn main() {
     let builder = RangesBuilder::default()
-        .with_lower(range(0, 100))
-        .with_middle(range(101, 200))
-        .with_upper(range(201, 300));
+        .with_lower(0..=100)
+        .with_middle(101..=200)
+        .with_upper(201..=300);
     let normalizer = Normalizer::new(builder.build());
 
     if let Some(z) = normalizer.calc(0) {

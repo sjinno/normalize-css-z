@@ -1,8 +1,12 @@
 #[cfg(feature = "custom")]
-use normalize_css_z::{normalizer::Normalizer, ranges::RangesBuilder, MANTISSA};
+use normalize_css_z::{
+    normalizer::Normalizer,
+    ranges::{len, RangesBuilder},
+    MANTISSA,
+};
 
 #[test]
-fn test_custom() {
+fn test_custom1() {
     #[cfg(feature = "custom")]
     {
         let builder = RangesBuilder::default();
@@ -21,6 +25,7 @@ fn test_custom() {
         }
 
         assert_eq!(counter, MANTISSA * 3 + 1);
+        assert_eq!(counter, norm.ranges.iter().map(len).sum::<i32>());
         assert_eq!(prev, 1.0);
     }
 }

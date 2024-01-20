@@ -2,7 +2,7 @@
 use normalize_css_z::{normalizer::Normalizer, MANTISSA};
 
 #[test]
-fn test_all() {
+fn test_basic() {
     #[cfg(feature = "custom")]
     {
         let norm = Normalizer::new(None);
